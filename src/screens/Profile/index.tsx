@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Image, Route, Text, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import RepositoryCard, { Repository } from '../../components/RepositoryCard';
+import { Entypo } from '@expo/vector-icons';
 import api from '../../services/api';
 
 import styles from './styles';
@@ -44,7 +45,10 @@ function Profile(props:Route) {
 
           <Text style={styles.text}>{profile.login}</Text>
 
-          <Text style={styles.text}>{profile.location}</Text>
+          <Text style={styles.text}>
+            <Entypo name="location-pin" size={18} color="white" />
+            {profile.location}
+          </Text>
         </View>
       </View>
 

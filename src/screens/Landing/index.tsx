@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Text, View } from "react-native";
-import { BorderlessButton, TextInput } from 'react-native-gesture-handler';
+import { BorderlessButton, ScrollView, TextInput } from 'react-native-gesture-handler';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import UserCard, {User} from '../../components/UserCard';
 
 import api from '../../services/api';
@@ -12,6 +13,39 @@ import { ProfileProps } from '../Profile';
 function Landing() {
   const [input, setInput] = useState('');
   const [card, setCard] = useState<User>();
+  const [searchs, setSearchs] = useState<User[]>([]);
+  const [count, setCount] = useState<number>(0);
+
+  function handleAddCardToSearchs() {
+    const array:User[] = searchs
+
+    card ? array.push(card) : null;
+
+    setSearchs(array);
+    setCount(count + 1);
+  }
+
+  async function getSearchs() {
+    try {
+      const jsonValue = await AsyncStorage.getItem('Searchs');
+
+      jsonValue != null ? setSearchs(JSON.parse(jsonValue)) : null;
+
+      setCount(searchs.length)
+    } catch(err) {
+      console.log(err);
+    }
+  }
+  
+  
+  async function storeSearchs() {
+    try {
+      const jsonValue = JSON.stringify(searchs);
+      await AsyncStorage.setItem('Searchs', jsonValue);
+    } catch(err) {
+      console.log(err);
+    }
+  }
 
   async function handleGetUser(user: string) {
     if(user) {
@@ -44,6 +78,17 @@ function Landing() {
     }
   }
 
+  useEffect(() => {
+    handleAddCardToSearchs();
+  }, [card]);
+
+  useEffect(() => {
+    storeSearchs();
+  }, [count]);
+
+  useEffect(() => {
+    getSearchs();
+  }, [])
 
   return (
     <View style={styles.container}>
@@ -78,6 +123,15 @@ function Landing() {
         <Text style={styles.title}>
           Pesquisas Recentes
         </Text>
+      <ScrollView style={styles.scroll}>
+          {searchs &&
+          searchs.map(element => {
+            return <UserCard 
+              key={searchs.indexOf(element)}
+              props={element}
+            />
+          }).reverse()}
+        </ScrollView>
       </View>
     </View>
   );

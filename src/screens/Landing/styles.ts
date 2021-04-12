@@ -62,7 +62,8 @@ const styles = StyleSheet.create({
 
   //#region LastSearchsContainer
   lastSearchsContainer: {
-    flex:1,
+    width: '100%',
+    height: '60%',
     paddingHorizontal: '3%',
   },
 
@@ -71,6 +72,10 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: FontSize(24)
   },
+
+  scroll: {
+    width: '100%',
+  }
   //#endregion LastSearchsContainer
   
 });

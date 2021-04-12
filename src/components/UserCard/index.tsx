@@ -2,6 +2,7 @@ import { useNavigation } from '@react-navigation/core';
 import React from 'react'
 import { Image, Text, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import { Entypo } from '@expo/vector-icons'; 
 import { ProfileProps } from '../../screens/Profile';
 import styles from './styles'
 
@@ -40,7 +41,10 @@ const UserCard: React.FC<UserCardProps> = ({ props }) => {
 
           <Text style={styles.text}>{props.login}</Text>
 
-          <Text style={styles.text}>{props.location}</Text>
+          <Text style={styles.text}>
+            <Entypo name="location-pin" size={18} color="white" />
+            {props.location}
+            </Text>
         </View>
       </TouchableOpacity>
     </View>

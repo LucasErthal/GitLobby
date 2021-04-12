@@ -9,12 +9,13 @@ const customDimensions = CustomDimensions();
 const styles = StyleSheet.create({
   container: {
     width: '98%',
-    height: '70%',
+    height: customDimensions.windowHeight / 5,
     backgroundColor: colors.blackSecondary,
     borderRadius: 10,
     borderStyle: 'solid',
     borderColor: colors.purpleSecondary,
     borderWidth: 1,
+    marginBottom: 3
   },
 
   button: {
